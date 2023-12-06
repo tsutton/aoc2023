@@ -1,5 +1,5 @@
 def main():
-    lines: List[str] = []
+    lines: list[str] = []
     with open("inputs/day1.txt", 'r') as f:
         for line in f:
             lines.append(line)
@@ -8,13 +8,13 @@ def main():
     print(sum(pt2(line) for line in lines))
 
 def pt1(line: str):
-    first_digit = None
+    first_digit = ''
     for c in line:
         if c.isnumeric():
             first_digit = c
             break
 
-    last_digit = None
+    last_digit = ''
     for c in reversed(line):
         if c.isnumeric():
             last_digit = c
@@ -32,7 +32,6 @@ def pt2(line: str):
 
     last_digit = 0
     for idx in range(len(line)-1, -1, -1):
-        # print(f"checking {line[idx:]}")
         val = number_at_start(line[idx:])
         if val is not None:
             last_digit = val
