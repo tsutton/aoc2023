@@ -16,7 +16,7 @@ def main():
 #         lines.append(line)
 
     print(sum(pt1(line) for line in lines))
-    # print(sum(pt2(line) for line in lines))
+    print(sum(pt2(line) for line in lines))
 
 @dataclass
 class Drawing:
@@ -51,6 +51,21 @@ def pt1(line: str) -> int:
         if d.red > 12 or d.green > 13 or d.blue > 14:
             return 0
     return int(game_number_str)
+
+# returns the game power of a given game
+def pt2(line: str) -> int:
+    line = line[5:] # strip "Game "
+    _, rest = line.split(':',1)
+    drawings = [parse_drawing(d) for d in rest.strip().split(';')]
+    max_red_seen = 0
+    max_green_seen = 0
+    max_blue_seen = 0
+    for d in drawings:
+        max_red_seen = max(max_red_seen, d.red)
+        max_green_seen = max(max_green_seen, d.green)
+        max_blue_seen = max(max_blue_seen, d.blue)
+    return max_red_seen * max_blue_seen * max_green_seen
+
 
 if __name__ == "__main__":
     main()
