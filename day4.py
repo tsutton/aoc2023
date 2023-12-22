@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 def example_input() -> list[str]:
     example = """\
 Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
@@ -28,11 +30,14 @@ def main():
     parts = pt1(lines)
     print(parts)
 
-def parse_line(line: str) -> tuple[set, set]:
+    print(pt2(lines))
+
+def parse_line(line: str) -> tuple[ set, set]:
     wins = set()
     ours = set()
 
-    line = line.split(":")[1].lstrip()
+    parts = line.split(":")
+    line = parts[1].lstrip()
     winStr, ourStr = line.split("|")
 
     for s in winStr.strip().split(' '):
@@ -53,6 +58,29 @@ def pt1(lines: list[str]) -> int:
         if len(l) > 0:
             tot += 2** (len(l)-1)
     return tot
+
+def pt2(lines: list[str]) -> int:
+
+    # first figure out, for each game, how many wins that game has by itself
+    # (not considering copies or anthing)
+
+    winCounts = []
+
+    for line in lines:
+        wins, ours = parse_line(line)
+        winCount = len(wins.intersection(ours))
+        winCounts.append(winCount)
+
+    counts = defaultdict(int)
+    for i in range(len(winCounts)):
+        # assume at the point we are at i, counts already tells us how many copies of it we have from prev ones
+
+        # add the one original
+        counts[i] += 1
+        for j in range(i+1, i+winCounts[i]+1):
+            counts[j] += counts[i]
+
+    return sum(counts.values())
 
 
 if __name__ == "__main__":
