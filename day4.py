@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def example_input() -> list[str]:
     example = """\
 Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
@@ -15,13 +16,15 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
         lines.append(line)
     return lines
 
+
 def real_input() -> list[str]:
     lines: list[str] = []
-    with open("inputs/day4.txt", 'r') as f:
+    with open("inputs/day4.txt", "r") as f:
         for line in f:
-            lines.append(line.strip()) # skip trailing mewline
+            lines.append(line.strip())  # skip trailing mewline
 
     return lines
+
 
 def main():
     lines = real_input()
@@ -32,7 +35,8 @@ def main():
 
     print(pt2(lines))
 
-def parse_line(line: str) -> tuple[ set, set]:
+
+def parse_line(line: str) -> tuple[set, set]:
     wins = set()
     ours = set()
 
@@ -40,15 +44,18 @@ def parse_line(line: str) -> tuple[ set, set]:
     line = parts[1].lstrip()
     winStr, ourStr = line.split("|")
 
-    for s in winStr.strip().split(' '):
-        if not s: continue
+    for s in winStr.strip().split(" "):
+        if not s:
+            continue
         wins.add(int(s))
 
-    for s in ourStr.strip().split(' '):
-        if not s: continue
+    for s in ourStr.strip().split(" "):
+        if not s:
+            continue
         ours.add(int(s))
 
     return (wins, ours)
+
 
 def pt1(lines: list[str]) -> int:
     tot = 0
@@ -56,11 +63,11 @@ def pt1(lines: list[str]) -> int:
         wins, ours = parse_line(line)
         l = wins.intersection(ours)
         if len(l) > 0:
-            tot += 2** (len(l)-1)
+            tot += 2 ** (len(l) - 1)
     return tot
 
-def pt2(lines: list[str]) -> int:
 
+def pt2(lines: list[str]) -> int:
     # first figure out, for each game, how many wins that game has by itself
     # (not considering copies or anthing)
     winCounts = []
@@ -76,7 +83,7 @@ def pt2(lines: list[str]) -> int:
 
         # add the one original
         counts[i] += 1
-        for j in range(i+1, i+winCounts[i]+1):
+        for j in range(i + 1, i + winCounts[i] + 1):
             counts[j] += counts[i]
 
     return sum(counts.values())
@@ -84,4 +91,3 @@ def pt2(lines: list[str]) -> int:
 
 if __name__ == "__main__":
     main()
-

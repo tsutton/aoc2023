@@ -1,26 +1,28 @@
 def main():
     lines: list[str] = []
-    with open("inputs/day1.txt", 'r') as f:
+    with open("inputs/day1.txt", "r") as f:
         for line in f:
             lines.append(line)
 
     print(sum(pt1(line) for line in lines))
     print(sum(pt2(line) for line in lines))
 
+
 def pt1(line: str):
-    first_digit = ''
+    first_digit = ""
     for c in line:
         if c.isnumeric():
             first_digit = c
             break
 
-    last_digit = ''
+    last_digit = ""
     for c in reversed(line):
         if c.isnumeric():
             last_digit = c
             break
 
-    return int(first_digit+last_digit)
+    return int(first_digit + last_digit)
+
 
 def pt2(line: str):
     first_digit = 0
@@ -31,25 +33,26 @@ def pt2(line: str):
             break
 
     last_digit = 0
-    for idx in range(len(line)-1, -1, -1):
+    for idx in range(len(line) - 1, -1, -1):
         val = number_at_start(line[idx:])
         if val is not None:
             last_digit = val
             break
 
-    return 10*first_digit+last_digit
+    return 10 * first_digit + last_digit
+
 
 def number_at_start(s: str) -> int | None:
     mapping: dict[str, int] = {
-        'one': 1,
-        'two': 2,
-        'three': 3,
-        'four': 4,
-        'five': 5,
-        'six': 6,
-        'seven': 7,
-        'eight':8,
-        'nine': 9,
+        "one": 1,
+        "two": 2,
+        "three": 3,
+        "four": 4,
+        "five": 5,
+        "six": 6,
+        "seven": 7,
+        "eight": 8,
+        "nine": 9,
     }
     if s[0].isnumeric():
         return int(s[0])
@@ -57,6 +60,7 @@ def number_at_start(s: str) -> int | None:
         if s.startswith(k):
             return v
     return None
+
 
 if __name__ == "__main__":
     main()
