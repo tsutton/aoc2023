@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import Self
+
 
 def example_input() -> list[str]:
     example = """\
@@ -61,9 +63,7 @@ class Interval:
     def end(self):
         return self.start + self.length - 1
 
-    def overlap(
-        self, other
-    ):  # returns Interval | None, couldn't figure out how to type
+    def overlap(self, other) -> Self | None:
         lower_start, higher_start = self, other
         if lower_start.start > higher_start.start:
             lower_start, higher_start = higher_start, lower_start
