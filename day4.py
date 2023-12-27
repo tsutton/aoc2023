@@ -63,7 +63,6 @@ def pt2(lines: list[str]) -> int:
 
     # first figure out, for each game, how many wins that game has by itself
     # (not considering copies or anthing)
-
     winCounts = []
 
     for line in lines:
